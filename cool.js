@@ -42,5 +42,5 @@ function login()
         return;
     }
     
-    window.location.href = "logme.php?name="+name+"&password="+pass;
+    window.location.href = "demos/login/logme.php?name="+name+"&password="+pass;
 }

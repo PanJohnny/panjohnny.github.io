@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Hello</title>
+        <title>Demos</title>
         <header>
             <h1>
-                Hello
+                Demos here:
             </h1>
         </header>
         <body class="epic">
-            <input class="cool" type="button" value="epic" onclick="transferTo('login.php');"/>
+            <input class="cool" type="button" value="Login demo" onclick="transferTo('demos/login/login.php');"/>
             <div class="">
                 
             </div>
@@ -17,7 +17,7 @@
 </html>
 
 <script type="text/javascript" src="cool.js"></script>
-<link rel = "stylesheet"type = "text/css" href = "epic.css"/>
+<link rel = "stylesheet"type = "text/css" href = "styles/epic.css"/>
 
 
 <!--fonty-->
