@@ -4,9 +4,11 @@
   border-radius: 100px;
   font-family: 'Kumbh Sans', sans-serif;
 }
+
 .readed {
   background-color: rgb(77, 72, 72);
 }
+
 .cool {
     background-color: #a7fffb;
     border:none;
