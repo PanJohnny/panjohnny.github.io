@@ -13,6 +13,6 @@
         <input type="button" id="lbutton" value="Log in" class="epic" onclick="login();"/>
 </body>
 </html>
-<link rel = "stylesheet"type = "text/css" href = "epic.css"/>
-<script type="text/javascript" src="cool.js"></script>
+<link rel = "stylesheet"type = "text/css" href = "https://panjohnny.github.io/styles/epic.css"/>
+<script type="text/javascript" src="login.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@700&display=swap" rel="stylesheet">

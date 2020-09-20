@@ -9,9 +9,7 @@
         </header>
         <body class="epic">
             <input class="cool" type="button" value="Login demo" onclick="transferTo('demos/login/login.php');"/>
-            <div class="">
-                
-            </div>
+            <input class="cool" type="button" value="Readfile demo" onclick="transferTo('demos/file_read/readfile.php');"/>
         </body>
     </head>
 </html>
