@@ -9,11 +9,15 @@
         </h1>
     </head>
     <body>
-        lol
+        
     </body>
 </html>
 <?php
-echo "<table class=\"readed\"><th><h3>We read this:</h3></th><tr><td>table data</td></tr></table>"; 
+$name = $_GET['file'];
+echo $name;
+$myfile = fopen($name, "r") or die("Unable to open file!");
+echo "<table class=\"readed\"><th><h3>We read this:</h3></th><tr><td>",fread($myfile,filesize($name)),"</td></tr></table>"; 
+fclose($myfile);
 ?>
 <link rel = "stylesheet"type = "text/css" href = "https://panjohnny.github.io/styles/epic.css"/>
 <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@700&display=swap" rel="stylesheet">
