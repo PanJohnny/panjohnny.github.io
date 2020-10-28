@@ -11,7 +11,7 @@
         <input type="password" id="password" name="pass" class="cool"/>
         <br>
         <input type="button" id="lbutton" value="Log in" class="epic" onclick="login();"/>
-</body>
+    </body>
 </html>
 <link rel = "stylesheet"type = "text/css" href = "https://panjohnny.github.io/styles/epic.css"/>
 <script type="text/javascript" src="login.js"></script>
