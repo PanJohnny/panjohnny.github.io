@@ -8,7 +8,28 @@
         Welcome to Johnnys site
     </h1>
 
-    There is nothing here so I would recommend you to leave. If you are looking for the coding thing it is on the idk
+    <script>
+      function ipLookUp () {
+  $.ajax('http://ip-api.com/json')
+  .then(
+      function success(response) {
+          console.log('User\'s Location Data is ', response);
+          console.log('User\'s Country', response.country);
+          if(response.country=="Czechia") {
+             document.innerHTML += "Zdar jsi z Čech";
+          } else {
+            document.innerHTML += "Hello";
+          }
+      },
+
+      function fail(data, status) {
+          console.log('Request failed.  Returned status of',
+                      status);
+      }
+  ); 
+}
+ipLookUp()
+    <script>
 </body>
 
 </html>
