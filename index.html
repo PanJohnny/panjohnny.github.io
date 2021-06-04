@@ -7,29 +7,7 @@
     <h1>
         Welcome to Johnnys site
     </h1>
-
-    <script>
-      function ipLookUp () {
-  $.ajax('http://ip-api.com/json')
-  .then(
-      function success(response) {
-          console.log('User\'s Location Data is ', response);
-          console.log('User\'s Country', response.country);
-          if(response.country=="Czechia") {
-             document.innerHTML += "Zdar jsi z Čech";
-          } else {
-            document.innerHTML += "Hello";
-          }
-      },
-
-      function fail(data, status) {
-          console.log('Request failed.  Returned status of',
-                      status);
-      }
-  ); 
-}
-ipLookUp()
-    <script>
+    <a id="lol"></a>
 </body>
 
 </html>
