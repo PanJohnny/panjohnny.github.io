@@ -1,12 +1,18 @@
 <!DOCTYPE HTML>
 <html>
   <head>
-    <title> redirecting </title>
-    Redirecting to url...
+    <title>PanJohnny | Redirecting</title>
   </head>
-  <script>
-    var hash = location.hash.substr(1);
-    window.location.href = hash;
-  </script>
+
+  <body>
+    Redirecting to <a href="/" id="asd"></a>...
+    <script>
+      var hash = location.hash.substr(1);
+      document.getElementById("asd").href = hash;
+      document.getElementById("asd").innerHTML = hash;
+      window.location.href = hash;
+    </script>
+  </body>
+  
 </html>
 

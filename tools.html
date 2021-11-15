@@ -1,0 +1,117 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="title" content="PanJohnny | tools">
+    <meta name="description" content="A small website that I created for fun.">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://panjohnny.github.io/">
+    <meta property="og:title" content="PanJohnnys | tools">
+    <meta property="og:description" content="A small website that I created for fun.">
+    <meta property="og:image" content="/logo.jpeg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://panjohnny.github.io/">
+    <meta property="twitter:title" content="PanJohnnys | tools">
+    <meta property="twitter:description" content="A small website that I created for fun.">
+    <meta property="twitter:image" content="/logo.jpeg">
+    <title>PanJohnny | Tools</title>
+    <link rel="icon" href="logo.jpeg">
+    <style>
+        body {
+            background-color: 1A1B27;
+            color: rgb(51, 158, 149);
+            font-family: 'Roboto', sans-serif;
+        }
+
+        h2 {
+            color: 6A9BEC;
+            font: bold;
+        }
+
+        h3 {
+            color: 6A9BEC;
+        }
+
+        a {
+            color: rgb(75, 202, 192);
+            text-decoration: none;
+        }
+
+        .tool {
+            border: 1px solid #7F7E84;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px;
+        }
+
+        #content-desktop {
+            display: block;
+        }
+
+        #content-mobile {
+            display: none;
+        }
+
+        @media screen and (max-width: 768px) {
+
+            #content-desktop {
+                display: none;
+            }
+
+            #content-mobile {
+                display: block;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1><a href="/">PanJohnny's web</a></h1>
+    </header>
+    <div id="about">
+        <h2>My tools</h2>
+        <p>
+            These are some of the small tools that I coded.
+        </p>
+        <div id="tools">
+            <div class="tool">
+                <h4><a href='/tools/json-tool#["name", "id"]'>Json tool</a></h4>
+                <p>
+                    A utility for my friends to fill up json. You will put an array of strings in hash and it would generate input fields. These input fields are used to fill up the json. Then you click the button and it will generate the json.
+                </p>
+                <p>
+                    Example: <a href='https://panjohnny.github.io/tools/json-tool#["name", "id"]'>https://panjohnny.github.io/tools/json-tool#["name", "id"]</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>
+            Made by <a href="https://github.com/PanJohnny">PanJohnny</a> | <a href="https://github.com/PanJohnny/panjohnny.github.io">Repo on github</a>
+        </p>
+    </footer>
+    <script>
+        var hash = window.location.hash;
+        var element = document.getElementById(hash.substring(1));
+        if (!element) {
+            window.scrollTo(0, 0);
+        } else {
+            if (element.getBoundingClientRect().top < 0) {
+                window.scrollTo(0, 0);
+            } else {
+                window.scrollTo(0, element.getBoundingClientRect().top);
+            }
+        }
+    </script>
+</body>
+
+</html>
