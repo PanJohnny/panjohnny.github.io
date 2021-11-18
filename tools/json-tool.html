@@ -28,41 +28,38 @@
             color: rgb(51, 158, 149);
             font-family: 'Roboto', sans-serif;
         }
-
+        
         h1 {
             color: 6A9BEC;
             font: bold;
         }
-
+        
         h3 {
             color: 6A9BEC;
         }
-
+        
         a {
             color: rgb(75, 202, 192);
             text-decoration: none;
         }
-
+        
         #content-desktop {
             display: block;
         }
-
+        
         #content-mobile {
             display: none;
         }
-
+        
         @media screen and (max-width: 768px) {
-
             #content-desktop {
                 display: none;
             }
-
             #content-mobile {
                 display: block;
             }
-
         }
-
+        
         input {
             border: 1px solid rgb(51, 158, 149);
             border-radius: 5px;
@@ -70,7 +67,7 @@
             margin: 5px;
             width: 20%;
         }
-
+        
         .codeblock {
             border-color: rgb(51, 158, 149);
             border-style: solid;
@@ -80,16 +77,16 @@
             margin: 5px;
             width: 50%;
         }
-
+        
         h2 {
             color: rgb(51, 158, 149);
         }
         
         #conv {
             background-color: rgb(51, 158, 149);
-            color:rgb(255, 255, 255);
+            color: rgb(255, 255, 255);
         }
-        </style>
+    </style>
 </head>
 
 <body>
@@ -104,21 +101,18 @@
 
     <h2>JSON Output</h2>
     <div id="output" class="codeblock">
-        { <br>
-            ... <br>
-        }
+        { <br> ... <br> }
     </div>
 
 
     <footer>
         <p>
-            Made by <a href="https://github.com/PanJohnny">PanJohnny</a> | <a
-                href="https://github.com/PanJohnny/panjohnny.github.io">Repo on github</a>
+            Made by <a href="https://github.com/PanJohnny">PanJohnny</a> | <a href="https://github.com/PanJohnny/panjohnny.github.io">Repo on github</a>
         </p>
     </footer>
     <script>
         var hash = window.location.hash.substring(1).replace(new RegExp('%20', 'g'), " ").replace(new RegExp('%2c', 'g'), ",").replace(new RegExp('%3a', 'g'), ":").replace(new RegExp('%22', 'g'), '"');
-        var placeholder = '<h3> %name% </h3> <input type="text" placeholder="%name%" name="input_f">'
+        var placeholder = '<h3> %name% </h3> <textarea placeholder="%name%" name="input_f">'
 
         try {
             var json = JSON.parse(hash);;
@@ -145,7 +139,6 @@
             }
             document.getElementById("output").innerHTML = JSON.stringify(jsons, null, " ").replace(new RegExp('\n', 'g'), '<br>');
         }
-
     </script>
 </body>
 
