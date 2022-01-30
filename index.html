@@ -1,185 +1,37 @@
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="title" content="PanJohnnys web">
-    <meta name="description" content="A small website that I created for fun.">
+    <title>PanJohnny</title>
 
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://panjohnny.github.io/">
-    <meta property="og:title" content="PanJohnnys web">
-    <meta property="og:description" content="A small website that I created for fun.">
-    <meta property="og:image" content="/logo.jpeg">
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://panjohnny.github.io/">
-    <meta property="twitter:title" content="PanJohnnys web">
-    <meta property="twitter:description" content="A small website that I created for fun.">
-    <meta property="twitter:image" content="/logo.jpeg">
-    <title>PanJohnnys web</title>
-    <link rel="icon" href="logo.jpeg">
     <style>
-        body {
-            background-color: 1A1B27;
-            color: rgb(51, 158, 149);
-            font-family: 'Roboto', sans-serif;
-        }
-
-        h2 {
-            color: 6A9BEC;
-            font: bold;
-        }
-
-        h3 {
-            color: 6A9BEC;
+        div {
+            display: flex;
+            background-color: blanchedalmond;
         }
 
         a {
-            color: rgb(75, 202, 192);
+            color: black;
             text-decoration: none;
-        }
-
-        .repo {
-            border: 1px solid #7F7E84;
-            border-radius: 5px;
-            padding: 10px;
-            margin: 10px;
-        }
-
-        #content-desktop {
-            display: block;
-        }
-
-        #content-mobile {
-            display: none;
-        }
-
-        @media screen and (max-width: 768px) {
-
-            #content-desktop {
-                display: none;
-            }
-
-            #content-mobile {
-                display: block;
-            }
-
+            border: black;
+            padding: 1.3em;
         }
     </style>
 </head>
-
 <body>
-    <header>
-        <h1><a href="/">PanJohnny's web</a></h1>
-    </header>
+    <h1>This website is deprecated</h1>
+    <p>
+        You will be redirected to my new website in a few seconds...
+    </p>
 
-    <div id="about">
-        <h2>About me</h2>
-        <p>
-            I am a small developer located in central europe. I am a self-taught programmer and I am currently learning
-            web development. I am iterested in minecraft and programming. I am also interested in the history of the world.
-        </p>
-        <h3>Languages</h3>
-        <ul>
-            <li>Java ☕</li>
-            <li>Python 🐍</li>
-            <li>HTML</li>
-            <li>CSS</li>
-            <li>JavaScript</li>
-        </ul>
+    <div><a href="/old"><h2>View it anyway</h2></a> <a href="https://panjohnny.vercel.app"><h2>Open new one</h2></a></div>
 
-        <h3>Interests</h3>
-        <ul>
-            <li>Minecraft ⛏</li>
-            <li>Programming 👨‍💻</li>
-            <li>History 👑</li>
-            <li>Archery 🏹</li>
-        </ul>
-
-        <div id="statistics">
-            <h3>Statistics</h3>
-            <img src="https://camo.githubusercontent.com/a06c98b9914dd11377bd7b08838e26cb89d331f7ac25289c442999f0732efd72/68747470733a2f2f6769746875622d726561646d652d73746174732e76657263656c2e6170702f6170693f757365726e616d653d50616e4a6f686e6e7926636f756e745f707269766174653d747275652673686f775f69636f6e733d7472756526696e636c7564655f616c6c5f636f6d6d6974733d7472756526686964655f626f726465723d74727565267468656d653d746f6b796f6e69676874"
-                alt="github stats">
-            <img src="https://camo.githubusercontent.com/1d7d18c0b9b84702c9a134ee8a9609687fc8f0d0009bd2c4e2c8e3c3848ae36b/68747470733a2f2f6769746875622d726561646d652d73747265616b2d73746174732e6865726f6b756170702e636f6d2f3f757365723d50616e4a6f686e6e7926686964655f626f726465723d74727565267468656d653d746f6b796f6e69676874"
-                alt="contribution statistics">
-            <img src="https://camo.githubusercontent.com/92d90911104ad04f7e8cb8665f6f350b741fbd46b231aa4069bb0223a1624a25/68747470733a2f2f6769746875622d726561646d652d73746174732e76657263656c2e6170702f6170692f746f702d6c616e67732f3f757365726e616d653d50616e4a6f686e6e7926686964655f626f726465723d74727565267468656d653d746f6b796f6e69676874"
-                alt="most used languages">
-            <img id="content-desktop"
-                src="https://camo.githubusercontent.com/0502cea60b710c443f691d30a753374fd681c48f2cd47db9b1b15d39ab3c05df/68747470733a2f2f61637469766974792d67726170682e6865726f6b756170702e636f6d2f67726170683f757365726e616d653d50616e4a6f686e6e792662675f636f6c6f723d31613162323726636f6c6f723d333862636164266c696e653d36323866646226706f696e743d62653931663226617265615f636f6c6f723d32623337353226617265613d7472756526686964655f626f726465723d7472756526637573746f6d5f7469746c653d4d79253230436f6e747269627574696f6e2532304772617068"
-                alt="contribution graph">
-        </div>
-
-        <div id="repositories">
-            <h3 id="projects">My projects</h3>
-            <div class="repo">
-                <h4><a href="https://github.com/PanJohnny/GameEngine">PanJohnny/GameEngine</a></h4>
-                <p>
-                    A small engine/library for creating simple game. It is a 2D game engine that I am currently working
-                    on.
-                </p>
-            </div>
-
-            <div class="repo">
-                <h4><a href="https://github.com/PanJohnny/Logger">PanJohnny/Logger</a></h4>
-                <p>
-                    A small logger library for logging messages to the console. I created this library in java because I
-                    wanted to know how to create a custom logger.
-                </p>
-            </div>
-
-            <div class="repo">
-                <h4><a href="https://github.com/PanJohnny/Nim">PanJohnny/Nim</a></h4>
-                <p>
-                    Back in time that I was on coding discord server I created a game called Nim. It is old chinese game
-                    where you take stones from a pile. You play against the computer.
-                </p>
-            </div>
-
-            <div class="repo">
-                <h4><a href="https://github.com/PanJohnny/Baka4J">PanJohnny/Baka4J</a></h4>
-                <p>
-                    A small library for making requests to school aplication used commonly in Czechia.
-                </p>
-            </div>
-
-            <div class="repo">
-                <h4><a href="https://github.com/PanJohnny?tab=repositories">Other projects</a></h4>
-                <p>
-                    You can look at other projects I have created.
-                </p>
-            </div>
-
-            <div class="repo">
-                <h4><a href="/tools">Tools</a></h4>
-                <p>
-                    You can look at tools that I have created on this webpage.
-                </p>
-            </div>
-        </div>
-    </div>
-
-    <footer>
-        <p>
-            Made by <a href="https://github.com/PanJohnny">PanJohnny</a> | <a href="https://github.com/PanJohnny/panjohnny.github.io">Repo on github</a>
-        </p>
-    </footer>
     <script>
-        var hash = window.location.hash;
-        var element = document.getElementById(hash.substring(1));
-        if (!element) {
-            window.scrollTo(0, 0);
-        } else {
-            if (element.getBoundingClientRect().top < 0) {
-                window.scrollTo(0, 0);
-            } else {
-                window.scrollTo(0, element.getBoundingClientRect().top);
-            }
-        }
+        setTimeout(()=> {
+            window.location.href="https://panjohnny.vercel.app/"
+        }, 4000)
     </script>
 </body>
-
 </html>
