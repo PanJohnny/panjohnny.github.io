@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hra</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300&display=swap');
+
+        :root {
+            /* CSS HEX */
+            --light-cyan: #defffcff;
+            --myrtle-green: #377771ff;
+            --oxford-blue: #031d44ff;
+            --mountbatten-pink: #987284ff;
+            --cameo-pink: #dbafc1ff;
+            font-family: Rubik, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-cyan);
+            color: var(--oxford-blue);
+        }
+
+        .options {
+            position: absolute;
+            bottom: 0%;
+            display: grid;
+            width: 80%;
+            height: 20%;
+            grid-template-rows: repeat(2, 1fr);
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .options::after {
+            content: "";
+            display: block;
+            clear: both;
+        }
+
+        .option {
+            margin: 1em;
+            background-color: var(--cameo-pink);
+            border-radius: 0.5em;
+            box-shadow: 0.3em 0.3em 0em var(--oxford-blue);
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            z-index: 10;
+            justify-content: center;
+        }
+
+        .option:hover {
+            filter: contrast(150%);
+        }
+
+        .option:active {
+            background-color: var(--mountbatten-pink);
+            box-shadow: 0.1em 0.1em 0em var(--oxford-blue);
+        }
+
+        .question-container {
+            position: absolute;
+            width: 100vw;
+            height: auto;
+            display: flex;
+            top: 20vh;
+            font-weight: bold;
+            font-size: 2em;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .question {
+            display: block;
+            width: 70%;
+            text-align: center;
+            padding: 1em;
+            background-color: var(--cameo-pink);
+            border-radius: 10px;
+            border-color: var(--mountbatten-pink);
+            border-style: solid;
+            border-width: 2px;
+            box-shadow: 0.1em 0.1em 0em var(--oxford-blue);
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <div class="overlay">
+            <div class="score-container">
+                <h1>Score: <span id="score">0</span></h1>
+                <div class="change">
+
+                </div>
+            </div>
+            <div class="question-container">
+                <div class="question">
+                    <span id="qn">1) </span>
+                    <span id="q">Invalid Base64 hash</span>
+                </div>
+            </div>
+            <div class="options">
+                <button class="option" option="0">a) hello</button>
+                <button class="option" option="1">b) you</button>
+                <button class="option" option="2">c) broke</button>
+                <button class="option" option="3">d) it</button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        let score = 0;
+        let correctAnswerCount = 0;
+        let qn = 0;
+        var questions = [
+        ];
+        // check if there is string in hash
+        if (window.location.hash) {
+            // get the string from hash
+            let hash = window.location.hash.substring(1);
+            // pars Base64 string to JSON
+            let json = atob(hash);
+            // parse JSON to object
+            questions = JSON.parse(json);
+        } else {
+            window.alert("Please provide a valid hash");
+            window.location.href = "/generator.html"
+        }
+        let options = ["Hello", "This", "Is", "Placeholder"];
+        let correct = 0;
+
+        function indexToLetter(index) {
+            switch (index) {
+                case 0:
+                    return "a";
+                case 1:
+                    return "b";
+                case 2:
+                    return "c";
+                case 3:
+                    return "d";
+            }
+        }
+
+        document.querySelectorAll(".option").forEach((self) => {
+            self.addEventListener("click", () => {
+                var correct = false;
+                if (self.getAttribute("option") == correct) {
+                    correct = true;
+                    document.querySelector(".change").innerHTML = `<h1 style="color=green;">Correct!</h1>`;
+                } else {
+                    document.querySelector(".change").innerHTML = `<h1 style="color=red;">Wrong!</h1>`;
+                }
+                setTimeout(() => {
+                    document.querySelector(".change").innerHTML = "";
+                    qn++;
+                    if (correct) {
+                        score++;
+                        correctAnswerCount++;
+                    } else {
+                        score--;
+                    }	
+                }, 500);
+            });
+        });
+
+        const interval = setInterval(() => {
+            if (!questions[qn]) {
+                document.querySelector(".options").style.display = "none";
+                document.querySelector(".question").innerHTML = `<h1>You got ${correctAnswerCount} out of ${questions.length} questions correct!</h1>`;
+                document.querySelector(".score-container").innerHTML = `<h1>Final Score: ${score}</h1>`;
+                // terminate this interval
+                clearInterval(interval);
+                return;
+            }
+            options = questions[qn].opt;
+            document.querySelector("#score").innerText = score;
+            document.querySelector("#qn").innerText = qn + 1 + ") ";
+            document.querySelector("#q").innerText = questions[qn].q;
+            document.querySelectorAll(".option").forEach((option, index) => {
+                option.innerText = indexToLetter(index) + ") " + options[index];
+            });
+            correct = questions[qn].ans;
+        }, 100);
+
+    </script>
+</body>
+
+</html>

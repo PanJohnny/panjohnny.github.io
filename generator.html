@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question JSON Generator</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300&display=swap');
+
+        :root {
+            /* CSS HEX */
+            --light-cyan: #defffcff;
+            --myrtle-green: #377771ff;
+            --oxford-blue: #031d44ff;
+            --mountbatten-pink: #987284ff;
+            --cameo-pink: #dbafc1ff;
+            font-family: Rubik, sans-serif;
+        }
+
+        body {
+            color: var(--oxford-blue);
+            background-color: var(--cameo-pink);
+        }
+
+        .container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            z-index: 10;
+            justify-content: center;
+            border-radius: 0.5em;
+            box-shadow: 0.3em 0.3em 0em var(--oxford-blue);
+        }
+
+        #form {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #form>* {
+            margin: 1em;
+        }
+
+        #code {
+            width: 80%;
+            height: 80%;
+            background-color: var(--light-cyan);
+            color: var(--oxford-blue);
+            border-radius: 0.5em;
+            box-shadow: 0.3em 0.3em 0em var(--oxford-blue);
+            font-family: Rubik, sans-serif;
+            font-size: 1.5em;
+            padding: 1em;
+            overflow-y: scroll;
+            display: none;
+        }
+
+        button {
+            margin: 1em;
+            background-color: var(--light-cyan);
+            border-radius: 0.5em;
+            box-shadow: 0.3em 0.3em 0em var(--oxford-blue);
+            padding: 1.1em;
+        }
+
+        button:hover {
+            filter: contrast(150%);
+        }
+
+        button:active {
+            background-color: var(--mountbatten-pink);
+            box-shadow: 0.1em 0.1em 0em var(--oxford-blue);
+        }
+
+        input {
+            margin: 0em;
+            background-color: var(--light-cyan);
+            border-radius: 0.5em;
+            box-shadow: 0.3em 0.3em 0em var(--oxford-blue);
+            font-size: 1.2em;
+            outline: none;
+        }
+
+        input:hover {
+            filter: contrast(150%);
+        }
+
+        select {
+            margin: 0em;
+            background-color: var(--light-cyan);
+            border-radius: 0.5em;
+            box-shadow: 0.3em 0.3em 0em var(--oxford-blue);
+            font-size: 1.2em;
+        }
+
+        select:hover {
+            filter: contrast(150%);
+        }
+
+        header {
+            text-align: center;
+        }
+
+        .tooltips > button {
+            margin: 1px;
+        }
+
+        .tooltips {
+            margin: 2px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>
+            Generátor otázek
+        </h1>
+    </header>
+    <div class="container">
+
+        <div id="form">
+            <div>
+                <h2>Název otázky</h2>
+                <input type="text" id="questionName" placeholder="Název otázky">
+            </div>
+            <!--Make collapsable div of answer inputs-->
+            <div id="answers">
+                <h2>Odpovědi</h2>
+                <div class="answer">
+                    <h3>Odpověď 1</h3>
+                    <input type="text" id="answer1" placeholder="Odpověď 1">
+                </div>
+                <div class="answer">
+                    <h3>Odpověď 2</h3>
+                    <input type="text" id="answer2" placeholder="Odpověď 2">
+                </div>
+                <div class="answer">
+                    <h3>Odpověď 3</h3>
+                    <input type="text" id="answer3" placeholder="Odpověď 3">
+                </div>
+                <div class="answer">
+                    <h3>Odpověď 4</h3>
+                    <input type="text" id="answer4" placeholder="Odpověď 4">
+                </div>
+            </div>
+            <div>
+                <h2>Správná odpověď</h2>
+                <!--List betwwen 1 and 4 which shows all filled up answers-->
+                <select id="correctAnswer">
+                    <option value="1">Odpověď 1</option>
+                    <option value="2">Odpověď 2</option>
+                    <option value="3">Odpověď 3</option>
+                    <option value="4">Odpověď 4</option>
+                </select>
+                <div class="tooltips">
+                    <button id="addToList" onclick="add()">Přidat</button>
+                    <button onclick="deleteLast()">Smazat poslední</button>
+                    <button id="generate" onclick="gen()">Generovat</button>
+                    <button onclick="window.location.reload()">Resetovat</button>
+                </div>
+
+            </div>
+            <div id="code">
+                <button onclick="copy()">Kopírovat JSON</button>
+                <button onclick="copyBase64()">Kopírovat Base64</button>
+                <button onclick="document.getElementById('code').style.display = 'none'">Skrýt</button>
+                <code>
+                    <pre id="json"></pre>
+                </code>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var list = [];
+
+        function add() {
+            var questionName = document.getElementById("questionName").value;
+            var answer1 = document.getElementById("answer1").value;
+            var answer2 = document.getElementById("answer2").value;
+            var answer3 = document.getElementById("answer3").value;
+            var answer4 = document.getElementById("answer4").value;
+
+            // store correct answer as index
+            var correctAnswer = document.getElementById("correctAnswer").value;
+
+            var json = {
+                "q": questionName,
+                "opt": [
+                    answer1,
+                    answer2,
+                    answer3,
+                    answer4
+                ],
+                "ans": parseInt(correctAnswer) - 1
+            }
+
+            list.push(json);
+        }
+
+        function gen() {
+            document.getElementById("code").style.display = "block";
+            var json = syntaxHighlight(list);
+            document.getElementById("json").innerHTML = json;
+        }
+
+        function copy() {
+            var copyText = document.getElementById("json");
+            copyToClipboard(copyText.innerText);
+        }
+
+        function copyBase64() {
+            var base = btoa(JSON.stringify(list));
+            copyToClipboard(base);
+        }
+
+        function copyToClipboard(text) {
+            const elem = document.createElement('textarea');
+            elem.value = text;
+            document.body.appendChild(elem);
+            elem.select();
+            document.execCommand('copy');
+            document.body.removeChild(elem);
+        }
+
+        function syntaxHighlight(json) {
+            if (typeof json != 'string') {
+                json = JSON.stringify(json, undefined, 2);
+            }
+            json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+                var cls = 'number';
+                if (/^"/.test(match)) {
+                    if (/:$/.test(match)) {
+                        cls = 'key';
+                    } else {
+                        cls = 'string';
+                    }
+                } else if (/true|false/.test(match)) {
+                    cls = 'boolean';
+                } else if (/null/.test(match)) {
+                    cls = 'null';
+                }
+                return '<span class="' + cls + '">' + match + '</span>';
+            });
+        }
+
+        function deleteLast() {
+            // remove last element from list
+            list.pop();
+            if (list.length == 0) {
+                document.getElementById("code").style.display = "none";
+            } else if (document.getElementById("code").style.display != "none") {
+                gen();
+            }
+        }
+    </script>
+</body>
+
+</html>
