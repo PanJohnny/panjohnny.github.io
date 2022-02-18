@@ -172,6 +172,7 @@
                 <button onclick="copy()">Kopírovat JSON</button>
                 <button onclick="copyBase64()">Kopírovat Base64</button>
                 <button onclick="document.getElementById('code').style.display = 'none'">Skrýt</button>
+                <button onclick="view()">Otevřít</button>
                 <code>
                     <pre id="json"></pre>
                 </code>
@@ -220,6 +221,10 @@
         function copyBase64() {
             var base = btoa(fix(JSON.stringify(list)));
             copyToClipboard(base);
+        }
+        
+        function view() {
+            window.open("./hra#"+btoa(fix(JSON.stringify(list))));
         }
 
         function copyToClipboard(text) {
