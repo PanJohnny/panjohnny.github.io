@@ -155,9 +155,11 @@
 
         document.querySelectorAll(".option").forEach((self) => {
             self.addEventListener("click", () => {
-                var correct = false;
+                var c = false;
+                console.log(self.getAttribute("option"));
                 if (self.getAttribute("option") == correct) {
-                    correct = true;
+                    c = true;
+                    console.log("correct");
                     document.querySelector(".change").innerHTML = `<h1 style="color=green;">Correct!</h1>`;
                 } else {
                     document.querySelector(".change").innerHTML = `<h1 style="color=red;">Wrong!</h1>`;
@@ -165,7 +167,7 @@
                 setTimeout(() => {
                     document.querySelector(".change").innerHTML = "";
                     qn++;
-                    if (correct) {
+                    if (c) {
                         score++;
                         correctAnswerCount++;
                     } else {
