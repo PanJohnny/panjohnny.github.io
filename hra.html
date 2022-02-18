@@ -132,7 +132,7 @@
             // pars Base64 string to JSON
             let json = atob(hash);
             // parse JSON to object
-            questions = JSON.parse(json);
+            questions = JSON.parse(reparse(json));
         } else {
             window.alert("Please provide a valid hash");
             window.location.href = "/generator.html"
@@ -194,6 +194,11 @@
             correct = questions[qn].ans;
         }, 100);
 
+        function reparse(str) {
+            return str.replace(/\\u([\d\w]{4})/gi, function (match, grp) {
+                return String.fromCharCode(parseInt(grp, 16));
+            });
+        }
     </script>
 </body>
 

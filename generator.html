@@ -218,7 +218,7 @@
         }
 
         function copyBase64() {
-            var base = btoa(JSON.stringify(list));
+            var base = btoa(fix(JSON.stringify(list)));
             copyToClipboard(base);
         }
 
@@ -261,6 +261,12 @@
             } else if (document.getElementById("code").style.display != "none") {
                 gen();
             }
+        }
+
+        function fix(str) {
+            return str.replace(/[^\x20-\x7E]/g, function (a) {
+                return '\\u' + ('0000' + a.charCodeAt(0).toString(16)).slice(-4);
+            });
         }
     </script>
 </body>
