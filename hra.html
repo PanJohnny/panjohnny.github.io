@@ -99,7 +99,7 @@
     <main>
         <div class="overlay">
             <div class="score-container">
-                <h1>Score: <span id="score">0</span></h1>
+                <h1>Skóre: <span id="score">0</span></h1>
                 <div class="change">
 
                 </div>
@@ -160,9 +160,9 @@
                 if (self.getAttribute("option") == correct) {
                     c = true;
                     console.log("correct");
-                    document.querySelector(".change").innerHTML = `<h1 style="color=green;">Correct!</h1>`;
+                    document.querySelector(".change").innerHTML = `<h1 style="color=green;">Správně!</h1>`;
                 } else {
-                    document.querySelector(".change").innerHTML = `<h1 style="color=red;">Wrong!</h1>`;
+                    document.querySelector(".change").innerHTML = `<h1 style="color=red;">Špatně!</h1>`;
                 }
                 setTimeout(() => {
                     document.querySelector(".change").innerHTML = "";
@@ -180,8 +180,8 @@
         const interval = setInterval(() => {
             if (!questions[qn]) {
                 document.querySelector(".options").style.display = "none";
-                document.querySelector(".question").innerHTML = `<h1>You got ${correctAnswerCount} out of ${questions.length} questions correct!</h1>`;
-                document.querySelector(".score-container").innerHTML = `<h1>Final Score: ${score}</h1>`;
+                document.querySelector(".question").innerHTML = `<h1>Měli jste ${correctAnswerCount}/${questions.length} odpovědí správně!</h1>`;
+                document.querySelector(".score-container").innerHTML = `<h1>Konečné skóre: ${score}</h1>`;
                 // terminate this interval
                 clearInterval(interval);
                 return;
