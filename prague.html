@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="title" content="Random-place-in-Prague-iganator">
+    <meta name="description" content="Gets you random place in Prague near to PID stop.">
+    <meta name="keywords" content="random, pid, prague">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="language" content="English">
+    <meta name="author" content="PanJohnny">
+
+    <script src="https://api.mapy.cz/loader.js" crossorigin="anonymous" defer></script>
+    <script type="module">
+        window.load = function () {
+            // clear all cookies
+            document.cookie.split(";").forEach(function (c) {
+                document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+            });
+            Loader.async = true;
+            Loader.load(null, { poi: true, suggest: true }, createMap);
+        }
+
+        window.createMap = function () {
+            const center = SMap.Coords.fromWGS84(14.41, 50.08);
+            const map = new SMap(JAK.gel("map"), center, 10);
+            map.addDefaultLayer(SMap.DEF_TURIST).enable();
+            map.addDefaultControls();
+
+            const sync = new SMap.Control.Sync({
+                bottomSpace: 0
+            });
+            map.addControl(sync);
+
+            window.map = map;
+        }
+
+    </script>
+    <script defer>
+        function initMotherfuckinMap() {
+            load()
+        }
+
+    </script>
+    <script type="module">
+        window.onload = function () {
+            initMotherfuckinMap()
+        };
+    </script>
+
+    <style>
+        body {
+            background-color: darkslategray;
+            color: antiquewhite;
+            font-size: medium;
+        }
+
+        #map>img {
+            max-width: none;
+        }
+
+        #map {
+            width: 100vw;
+            margin-top: 1em;
+            margin-left: 0px;
+            height: 50%;
+            display: block;
+            position: absolute;
+        }
+
+        #gen {
+            width: 100%;
+            background-color: aquamarine;
+            padding: 1em;
+            font-size: larger;
+        }
+
+        #status {
+            font-size: 2em;
+        }
+
+        #places {
+            width: 100%;
+            display: block;
+            font-size: 1.3em;
+        }
+
+        .place::after {
+            content: ", ";
+        }
+    </style>
+</head>
+
+<body>
+    <button type="submit" id="gen" onclick="gen()">
+        Generate
+    </button>
+
+    <div id="status">
+
+    </div>
+
+    <div id="places">
+
+    </div>
+
+    <div id="map"></div>
+
+    <footer>
+
+    </footer>
+
+    
+    <script>
+        var points = [];
+        const openData = 'https://opendata.iprpraha.cz/CUR/DOP/DOP_PID_ZASTAVKY_B/WGS_84/DOP_PID_ZASTAVKY_B.json';
+
+        const status = document.getElementById('status');
+        const places = document.getElementById('places');
+
+        const gen = () => {
+            const xhr = new XMLHttpRequest();
+            status.innerHTML = "Loading...";
+            xhr.open('GET', openData, true);
+            xhr.onload = () => {
+                if (xhr.status === 200) {
+                    const data = JSON.parse(xhr.responseText);
+                    var random = Math.floor(Math.random() * data.features.length);
+                    var place = data.features[random].properties;
+                    // properties.ZAST_OBEC must be Praha
+                    while (place.ZAST_OBEC !== "Praha") {
+                        random = Math.floor(Math.random() * data.features.length);
+                        place = data.features[random].properties;
+                    }
+                    status.innerHTML = "";
+                    places.innerHTML += `<span class="place">${place.ZAST_NAZEV}</span>`;
+
+                    generateMap(data.features[random].geometry.coordinates);
+
+                    points.push(data.features[random].geometry.coordinates);
+                }
+            }
+            xhr.send();
+        }
+
+        function generateMap(coords) {
+            var map = window.map;
+            var center = SMap.Coords.fromWGS84(coords[0], coords[1])
+            map.setCenter(center, 40);
+
+            var layer = new SMap.Layer.Marker();
+            map.addLayer(layer);
+            layer.enable();
+
+            var options = {
+                url: 'https://api.mapy.cz/img/api/marker/drop-blue.png'
+            };
+            var marker = new SMap.Marker(center, "myMarker", options);
+            layer.addMarker(marker);
+
+            map._zoom = 40;
+        }
+    </script>
+</body>
+
+</html>
