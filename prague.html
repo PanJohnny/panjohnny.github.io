@@ -91,7 +91,7 @@
         }
 
         .place::after {
-            content: ", ";
+            content: "; ";
         }
 
         #disclaimer {
@@ -143,6 +143,22 @@
 
         var data = null;
         var loaded = false;
+        var op = 0;
+
+        switch(window.location.hash) {
+            case "#P":
+                op = 1;
+                break;
+            case "#ALL":
+                op = 2;
+                break;
+            case "#1":
+                op = 3;
+                break;
+            default:
+                op = 0;
+                break;
+        }
 
         const gen = () => {
             if (!loaded) {
@@ -153,7 +169,7 @@
             var random = Math.floor(Math.random() * data.features.length);
             var place = data.features[random].properties;
             // properties.ZAST_OBEC must be Praha
-            while (place.ZAST_OBEC !== "Praha") {
+            while (!condintion(place)) {
                 random = Math.floor(Math.random() * data.features.length);
                 place = data.features[random].properties;
             }
@@ -177,6 +193,19 @@
                 }
             }
             xhr.send();
+        }
+
+        function condintion(place) {
+            switch (op) {
+                case 0:
+                    return place.ZAST_NAZEV === "Praha";
+                case 1:
+                    return place.ZAST_PASMO === "P";
+                case 2:
+                    return true;
+                case 3:
+                    return place.ZAST_PASMO === "1";
+            }
         }
 
         loadData();
