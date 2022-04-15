@@ -52,10 +52,18 @@
     </script>
 
     <style>
+        :root {
+            --baby-blue-eyes: #A9CEF4;
+            --middle-yellow-red: #f0b67f;
+            --onyx: #393d3f
+        }
         body {
-            background-color: darkslategray;
-            color: antiquewhite;
+            overflow: hidden;
+            background: linear-gradient(to bottom right, var(--middle-yellow-red) 60%, var(--middle-yellow-red) 100%);
+            color: var(--onyx);
             font-size: medium;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            margin: 1px;
         }
 
         #map>img {
@@ -63,7 +71,7 @@
         }
 
         #map {
-            width: 99vw;
+            width: 100%;
             margin-top: 1em;
             margin-left: 0px;
             height: 70%;
@@ -73,11 +81,13 @@
 
         #gen {
             width: 100%;
-            background-color: wheat;
+            background-color: var(--baby-blue-eyes);
             padding: 1em;
             font-size: larger;
-            color: darkolivegreen;
-            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            border-radius: 7px;
+            border-color: var(--onyx);
+            box-shadow: #A9CEF4 0px 0px 10px;
+            font-size: 1.2em;
         }
 
         #status {
@@ -85,6 +95,11 @@
         }
 
         #places {
+            margin-top: 1em;
+            border-top: 1px var(--onyx) solid;
+            border-bottom: 1px var(--onyx) solid;
+            padding-top: .3em;
+            padding-bottom: .3em;
             width: 100%;
             display: block;
             font-size: 1.3em;
@@ -98,13 +113,11 @@
             position: absolute;
             right: 1em;
             bottom: 1em;
-            background-color: aquamarine;
+            background-color: var(--baby-blue-eyes);
             padding: 0.5em;
             border-radius: 7px;
-            color: black;
             font-size: medium;
             font-weight: bold;
-            font-family: Georgia, 'Times New Roman', Times, serif;
             width: 18em;
             /* make it on top of everything */
             z-index: 100;
@@ -122,7 +135,7 @@
     </div>
 
     <div id="places">
-
+        Stops:
     </div>
 
     <div id="map"></div>
@@ -141,6 +154,10 @@
         const status = document.getElementById('status');
         const places = document.getElementById('places');
 
+        window.onerror = (msg, url, line, col, err) => {
+            status.innerHTML = msg;
+        }
+
         var data = null;
         var loaded = false;
         var op = 0;
@@ -155,9 +172,6 @@
             case "#1":
                 op = 3;
                 break;
-            default:
-                op = 0;
-                break;
         }
 
         const gen = () => {
@@ -168,11 +182,6 @@
             status.innerHTML = 'Getting random point... <i class="fas fa-spinner fa-spin"></i>';
             var random = Math.floor(Math.random() * data.features.length);
             var place = data.features[random].properties;
-            // properties.ZAST_OBEC must be Praha
-            while (!condintion(place)) {
-                random = Math.floor(Math.random() * data.features.length);
-                place = data.features[random].properties;
-            }
             status.innerHTML = "";
             places.innerHTML += `<span class="place"><i class="${icon}"></i> ${place.ZAST_NAZEV}</span>`;
 
@@ -189,22 +198,42 @@
                 if (xhr.status === 200) {
                     data = JSON.parse(xhr.responseText);
                     loaded = true;
-                    status.innerHTML = "All data downloaded.";
+                    status.innerHTML = "All data downloaded. Filtering... <i class='fas fa-spinner fa-spin'></i>";
+                    
+                    const initialSize = data.features.length;
+
+                    // filter the data.features array
+                    data.features = data.features.filter(place => condintion(place));
+
+                    console.log(`Filtered out ${initialSize - data.features.length} places. From ${initialSize}, to ${data.features.length}.`);
+
+                    status.innerHTML = "All done!";
+
+                    setTimeout(() => {
+                        status.innerHTML = "";
+                    }, 1000);
+                } else {
+                    status.innerHTML = "Error: " + xhr.statusText + " (" + xhr.status + ")";
                 }
             }
+
+            xhr.onerror = (err) => {
+                status.innerHTML = "Error with parsing data!"
+            };
             xhr.send();
         }
 
         function condintion(place) {
+            place = place.properties;
             switch (op) {
                 case 0:
-                    return place.ZAST_NAZEV === "Praha";
+                    return place.ZAST_OBEC === "Praha";
                 case 1:
                     return place.ZAST_PASMO === "P";
                 case 2:
                     return true;
                 case 3:
-                    return place.ZAST_PASMO === "1";
+                    return place.ZAST_PASMO == "1";
             }
         }
 
@@ -213,7 +242,6 @@
         function generateMap(coords) {
             var map = window.mapa;
             var center = SMap.Coords.fromWGS84(coords[0], coords[1])
-            map._center = center;
 
             var options = {
                 url: 'https://api.mapy.cz/img/api/marker/drop-blue.png'
@@ -225,6 +253,9 @@
             layer.enable();
 
             layer.addMarker(marker);
+
+            map.setCenter(center);
+            map._zoom = 15;
         }
 
         setTimeout(() => {
