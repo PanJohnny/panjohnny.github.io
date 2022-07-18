@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Skvělá věc</title>
+        <style>
+            body {
+                font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            }
+
+            #in {
+                width: 100%;
+                outline: none;
+                font-size: 5em;
+                margin-bottom: 2em;
+            }
+
+            #s {
+                width: 100%;
+                height: 10%;
+                outline: none;
+                font-size: 2em;
+                background-color: white;
+            }
+
+            #out {
+                width: 100%;
+                height: 20%;
+                outline: none;
+                font-size: 2em;
+                background-color: white;
+            }
+        </style>
+
+        <script src="/interpreter.js"></script>
+    </head>
+
+    <body>
+        <textarea name="Input" id="in" cols="1" rows="10"></textarea>
+        <input type="submit" value="Submit" id="s" onclick="document.querySelector('#out').innerText = submit(document.querySelector('#in').value).log"/>
+
+        <div id="out">
+
+        </div>
+    </body>
+</html>
