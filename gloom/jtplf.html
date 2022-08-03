@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java to PLF utility</title>
+    <meta name="description" content="Converts Java to PLF">
+
+    <style>
+        body {
+            background-color: black;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <input type="text" id="java" placeholder="Enter Java code">
+    <br>
+    com.panjohnny.game.<select id="package">
+        <option value="com.panjohnny.game">*</option>
+        <option value="com.panjohnny.game.data">data</option>
+        <option value="com.panjohnny.game.data.plf">data.plf</option>
+        <option value="com.panjohnny.game.event">event</option>
+        <option value="com.panjohnny.game.level">level</option>
+        <option value="com.panjohnny.game.light">light</option>
+        <option value="com.panjohnny.game.mem">mem</option>
+        <option value="com.panjohnny.game.render">render</option>
+        <option value="com.panjohnny.game.scenes">scenes</option>
+        <option value="com.panjohnny.game.scenes.designer">scenes.designer</option>
+        <option value="com.panjohnny.game.tile">tile</option>
+        <option value="com.panjohnny.game.util">util</option>
+        <option value="com.panjohnny.game.widgets">widgets</option>
+    </select>
+    <br>
+    <input type="button" value="Convert" id="convert">
+    <br>
+    <div id="result"></div>
+
+    <script>
+        const replace = {
+            "Colors.RED": "-6133911",
+            "Colors.DARK": "5159",
+            "Colors.YELLOW": "14732200"
+        };
+
+        var java = document.getElementById('java');
+        var package = document.getElementById('package');
+        var result = document.getElementById('result');
+        var convert = document.getElementById('convert');
+        convert.addEventListener('click', function() {
+            var javaCode = java.value;
+            var packageName = package.value;
+            var plfCode = javaToPlf(javaCode, packageName);
+            result.innerHTML = plfCode;
+        });
+
+        function javaToPlf(java, package) {
+            if(java.startsWith("new "))
+                java = java.substring(4);
+
+            // replace all "" in java with blank
+            java = java.replace(/\"/g, " ");
+
+            // replace all colors
+            for(var key in replace) {
+                var value = replace[key];
+                java = java.replace(key, value);
+            }
+
+            java = java.replace(", ", ",");
+
+            return package + "." + java.trim();
+        }
+    </script>
+</body>
+</html>
