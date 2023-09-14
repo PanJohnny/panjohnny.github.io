@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Šnekovy dluhy</title>
+</head>
+
+<body>
+    <h1 style="color: red; font-size: 100px;">Šnek dluží <b id="love"></b> korun</h1>
+    <p>Uplynulo <b id="dni"></b> dní.</p>
+    <p>Celkem dluží dlužník <b id="celkem"></b> korun</p>
+    <p>Původní částka: 13kč, úroky 2kč/den + průměrný meziroční úhrn inflace (zdroj ČSÚ) <span id="inflace"></span> %</p>
+</body>
+
+</html>
+
+<script>
+    window.addEventListener("load", async () => {
+        const love = document.querySelector("#love");
+        const dni = document.querySelector("#dni");
+        const celkem = document.querySelector("#celkem");
+        const inf = document.querySelector("#inflace");
+
+        const start = new Date("07/20/2023");
+        const now = new Date(Date.now());
+
+        const in_time = now.getTime() - start.getTime();
+        const days = in_time / (1000 * 3600 * 24);
+
+        dni.innerText = Math.floor(days);
+
+        const dom = document.createElement("html");
+
+        const data = await fetch("https://www.czso.cz/csu/czso/inflace_spotrebitelske_ceny").then(r => r.text());
+        dom.innerHTML = data;
+
+        const inflace = parseFloat(dom.querySelector("#p_p_id_ContentPortlet_WAR_rsprezentace_INSTANCE_zIHiiFgQb65y_ > div > div > div > div > div > div.obsah > table > tbody > tr > td:nth-child(2) > ul > li:nth-child(1) > b:nth-child(3)").innerText.replace(",", "."));
+
+        const mon = 13 * (inflace/10 * (days / (365 / 12))) + days * 2;
+        love.innerText = Math.floor(mon);
+        celkem.innerText = Math.floor(mon * 5);
+        inf.innerText = inflace;
+    });
+</script>
+
+<style>
+    :root {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        height: 100%;
+    }
+
+    p {
+        font-size: larger;
+    }
+</style>
