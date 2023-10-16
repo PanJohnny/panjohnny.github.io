@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vaše data</title>
+</head>
+<body>
+    <h1>Zde si můžete zkopírovat vaše data</h1>
+    <textarea name="" id="data" cols="40" rows="10"></textarea>
+</body>
+</html>
+
+<script>
+    document.querySelector("#data").value = location.hash.substring(1);
+</script>
+
+<style>
+    html {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+</style>
