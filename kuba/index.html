@@ -162,6 +162,8 @@
         const diffTime = birthday - now;
         if (diffTime < 0) {
             count.innerHTML = "KONEC :O";
+            document.querySelector("#unit").innerHTML = "ČAS VYPRŠEL";
+            return;
         }
         const diffSeconds = Math.ceil(diffTime / (1000));
 
