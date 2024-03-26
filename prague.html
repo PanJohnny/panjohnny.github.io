@@ -149,7 +149,7 @@
         var icon = "fa-solid fa-bus-simple"
 
         var points = [];
-        const openData = 'https://opendata.iprpraha.cz/CUR/DOP/DOP_PID_ZASTAVKY_B/WGS_84/DOP_PID_ZASTAVKY_B.json';
+        const openData = 'https://data.pid.cz/stops/json/stops.json';
 
         const status = document.getElementById('status');
         const places = document.getElementById('places');
@@ -180,14 +180,22 @@
                 return;
             }
             status.innerHTML = 'Getting random point... <i class="fas fa-spinner fa-spin"></i>';
-            var random = Math.floor(Math.random() * data.features.length);
-            var place = data.features[random].properties;
+            var random = Math.floor(Math.random() * data.stopGroups.length);
+            var place = data.stopGroups[random];
             status.innerHTML = "";
-            places.innerHTML += `<span class="place"><i class="${icon}"></i> ${place.ZAST_NAZEV}</span>`;
+            let lines = [];
+            for (let i = 0; i < place.stops.length; i++) {
+                const stop = place.stops[i];
+                for (let l = 0; l < stop.lines.length; l++) {
+                    if (!lines.includes(stop.lines[l].name))
+                        lines.push(stop.lines[l].name);
+                }
+            }
+            places.innerHTML += `<span class="place"><i class="${icon}"></i> ${place.name} (${lines.join(", "}})</span>`;
 
-            generateMap(data.features[random].geometry.coordinates);
+            generateMap(place.avgLat, place.avgLon);
 
-            points.push(data.features[random].geometry.coordinates);
+            points.push(place.avgLat, place.avgLon);
         }
 
         const loadData = () => {
@@ -200,12 +208,12 @@
                     loaded = true;
                     status.innerHTML = "All data downloaded. Filtering... <i class='fas fa-spinner fa-spin'></i>";
                     
-                    const initialSize = data.features.length;
+                    const initialSize = data.stopGroups.length;
 
                     // filter the data.features array
-                    data.features = data.features.filter(place => condintion(place));
+                    data.stopGroups = data.stopGroups.filter(place => condition(place));
 
-                    console.log(`Filtered out ${initialSize - data.features.length} places. From ${initialSize}, to ${data.features.length}.`);
+                    console.log(`Filtered out ${initialSize - data.stopGroups.length} places. From ${initialSize}, to ${data.stopGroups.length}.`);
 
                     status.innerHTML = "All done!";
 
@@ -223,17 +231,16 @@
             xhr.send();
         }
 
-        function condintion(place) {
-            place = place.properties;
+        function condition(place) {
             switch (op) {
                 case 0:
-                    return place.ZAST_OBEC === "Praha";
+                    return place.municipality === "Praha";
                 case 1:
-                    return place.ZAST_PASMO === "P";
+                    return ["P","0","B"].some(v => place.zone.includes(v));
                 case 2:
                     return true;
                 case 3:
-                    return place.ZAST_PASMO == "1";
+                    return place.zone == "1";
             }
         }
 
