@@ -201,6 +201,7 @@
         const loadData = () => {
             const xhr = new XMLHttpRequest();
             status.innerHTML = 'Downloading data from the internet... <i class="fas fa-spinner fa-spin"></i>';
+            xhr.setRequestHeader('Access-Control-Allow-Headers', '*');
             xhr.open('GET', openData, true);
             xhr.onload = () => {
                 if (xhr.status === 200) {
